@@ -1,12 +1,18 @@
-# what the user in the quiz game will do
-class User:
-    def __init__(self, user_id, username):
-        self.id = user_id
-        self.username = username
-        self.current_score = 0
+from question_model import QuizQuestion
+from data import question_data
+from quiz_brain import QuizBrain
 
+question_bank = []
+for question in question_data:
+    question_text = question['text']
+    question_answer = question['answer']
+    new_question = QuizQuestion(question_text, question_answer)
+    question_bank.append(new_question)
 
-user_1 = User("001", "Amy")
+quiz = QuizBrain(question_bank)
 
+while quiz.still_has_questions():
+    quiz.get_question()
 
-print(user_1.current_score)
+print("You've completed the quiz ")
+print(f"Your final score was: {quiz.score}/{quiz.question_number}")
